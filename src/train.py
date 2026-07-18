@@ -13,6 +13,8 @@ def train_agent(episodes=5):
 
     agent = QLearningAgent()
 
+    reward_history = []
+
     for episode in range(episodes):
 
         state, _ = env.reset()
@@ -40,11 +42,18 @@ def train_agent(episodes=5):
 
             done = terminated or truncated
 
+        reward_history.append(total_reward)
+
         print(f"Episode {episode + 1} | Total Reward = {total_reward:.2f}")
+
+        # Epsilon Decay
+        agent.epsilon = max(0.1, agent.epsilon * 0.95)
 
     print("\nTraining Completed!")
 
     print(f"Total States Learned : {len(agent.q_table)}")
+    print(f"Final Epsilon : {agent.epsilon:.3f}")
+    print(f"Average Reward : {sum(reward_history) / len(reward_history):.2f}")
 
 
 if __name__ == "__main__":
