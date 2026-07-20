@@ -14,6 +14,7 @@ def train_agent(episodes=5):
     agent = QLearningAgent()
 
     reward_history = []
+    training_results = []
 
     for episode in range(episodes):
 
@@ -44,6 +45,10 @@ def train_agent(episodes=5):
 
         reward_history.append(total_reward)
 
+        training_results.append(
+            f"Episode {episode + 1}: Reward = {total_reward:.2f}"
+        )
+
         print(f"Episode {episode + 1} | Total Reward = {total_reward:.2f}")
 
         # Epsilon Decay
@@ -54,6 +59,20 @@ def train_agent(episodes=5):
     print(f"Total States Learned : {len(agent.q_table)}")
     print(f"Final Epsilon : {agent.epsilon:.3f}")
     print(f"Average Reward : {sum(reward_history) / len(reward_history):.2f}")
+
+    with open("results/training_results.txt", "w") as file:
+
+        file.write("Q-Learning Training Results\n")
+        file.write("=" * 35 + "\n\n")
+
+        for line in training_results:
+            file.write(line + "\n")
+
+        file.write("\n")
+        file.write(f"Average Reward : {sum(reward_history) / len(reward_history):.2f}\n")
+        file.write(f"Final Epsilon : {agent.epsilon:.3f}\n")
+
+    print("Training results saved to results/training_results.txt")
 
 
 if __name__ == "__main__":

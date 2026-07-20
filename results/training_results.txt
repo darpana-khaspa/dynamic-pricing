@@ -1,0 +1,11 @@
+Q-Learning Training Results
+===================================
+
+Episode 1: Reward = 491000.00
+Episode 2: Reward = 503500.00
+Episode 3: Reward = 502500.00
+Episode 4: Reward = 482500.00
+Episode 5: Reward = 489500.00
+
+Average Reward : 493800.00
+Final Epsilon : 0.774
