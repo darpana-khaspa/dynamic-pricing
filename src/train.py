@@ -52,11 +52,14 @@ def train_agent(episodes=5):
         print(f"Episode {episode + 1} | Total Reward = {total_reward:.2f}")
 
         # Epsilon Decay
-        agent.epsilon = max(0.1, agent.epsilon * 0.95)
+        agent.decay_epsilon()
 
     print("\nTraining Completed!")
 
-    print(f"Total States Learned : {len(agent.q_table)}")
+    stats = agent.get_training_statistics()
+
+    print(f"Total States Learned : {stats['states_learned']}")
+    print(f"Training Steps : {stats['training_steps']}")
     print(f"Final Epsilon : {agent.epsilon:.3f}")
     print(f"Average Reward : {sum(reward_history) / len(reward_history):.2f}")
 

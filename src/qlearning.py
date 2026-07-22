@@ -18,6 +18,8 @@ class QLearningAgent:
         learning_rate=0.1,
         discount_factor=0.95,
         epsilon=1.0,
+        epsilon_decay=0.95,
+        min_epsilon=0.1,
     ):
 
         self.state_size = state_size
@@ -25,7 +27,12 @@ class QLearningAgent:
 
         self.learning_rate = learning_rate
         self.discount_factor = discount_factor
+
         self.epsilon = epsilon
+        self.epsilon_decay = epsilon_decay
+        self.min_epsilon = min_epsilon
+
+        self.training_steps = 0
 
         # Q-table
         self.q_table = {}
@@ -77,6 +84,28 @@ class QLearningAgent:
         )
 
         self.q_table[state][action] = updated_q
+        self.training_steps += 1
+
+    def decay_epsilon(self):
+        """
+        Reduce exploration after every episode.
+        """
+
+        self.epsilon = max(
+            self.min_epsilon,
+            self.epsilon * self.epsilon_decay
+        )
+
+    def get_training_statistics(self):
+        """
+        Return current learning statistics.
+        """
+
+        return {
+            "epsilon": self.epsilon,
+            "training_steps": self.training_steps,
+            "states_learned": len(self.q_table)
+        }
 
 
 if __name__ == "__main__":
@@ -103,3 +132,6 @@ if __name__ == "__main__":
     print("Reward        :", reward)
     print("\nUpdated Q-values:")
     print(agent.get_q_values(state))
+
+    print("\nTraining Statistics:")
+    print(agent.get_training_statistics())
