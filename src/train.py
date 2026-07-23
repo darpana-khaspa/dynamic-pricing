@@ -2,6 +2,8 @@
 Q-Learning Training
 Travel & Hospitality - Reinforcement Learning for Dynamic Pricing
 """
+import matplotlib.pyplot as plt
+import os
 
 from environment import HotelPricingEnv
 from qlearning import QLearningAgent
@@ -76,6 +78,23 @@ def train_agent(episodes=5):
         file.write(f"Final Epsilon : {agent.epsilon:.3f}\n")
 
     print("Training results saved to results/training_results.txt")
+
+    # Create results directory if it doesn't exist
+    os.makedirs("results", exist_ok=True)
+
+    # Plot training rewards
+    plt.figure(figsize=(8, 5))
+    plt.plot(range(1, len(reward_history) + 1), reward_history, marker="o")
+    plt.title("Training Reward per Episode")
+    plt.xlabel("Episode")
+    plt.ylabel("Total Reward")
+    plt.grid(True)
+
+    plot_path = "results/training_rewards.png"
+    plt.savefig(plot_path)
+    plt.close()
+
+    print(f"Training reward plot saved to {plot_path}")
 
 
 if __name__ == "__main__":
