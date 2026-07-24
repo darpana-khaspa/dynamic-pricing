@@ -1,0 +1,7 @@
+Q-Learning Evaluation Report
+===================================
+
+Evaluation Episodes : 3
+Average Reward      : 400000.00
+Best Reward         : 400000.00
+Worst Reward        : 400000.00

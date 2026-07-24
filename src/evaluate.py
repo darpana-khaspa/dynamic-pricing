@@ -3,6 +3,8 @@ Model Evaluation
 Travel & Hospitality - Reinforcement Learning for Dynamic Pricing
 """
 
+import os
+
 from environment import HotelPricingEnv
 from qlearning import QLearningAgent
 
@@ -42,10 +44,27 @@ def evaluate_agent(episodes=3):
 
         print(f"Evaluation Episode {episode + 1}: Reward = {total_reward:.2f}")
 
+    average_reward = sum(rewards) / len(rewards)
+    best_reward = max(rewards)
+    worst_reward = min(rewards)
+
     print("\nEvaluation Completed!")
-    print(f"Average Reward: {sum(rewards)/len(rewards):.2f}")
+    print(f"Average Reward : {average_reward:.2f}")
+    print(f"Best Reward    : {best_reward:.2f}")
+    print(f"Worst Reward   : {worst_reward:.2f}")
+
+    os.makedirs("results", exist_ok=True)
+
+    with open("results/evaluation_report.txt", "w") as file:
+        file.write("Q-Learning Evaluation Report\n")
+        file.write("=" * 35 + "\n\n")
+        file.write(f"Evaluation Episodes : {len(rewards)}\n")
+        file.write(f"Average Reward      : {average_reward:.2f}\n")
+        file.write(f"Best Reward         : {best_reward:.2f}\n")
+        file.write(f"Worst Reward        : {worst_reward:.2f}\n")
+
+    print("Evaluation report saved to results/evaluation_report.txt")
 
 
 if __name__ == "__main__":
-
     evaluate_agent()
