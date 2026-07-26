@@ -2,5 +2,8 @@
 
 This project is developed as part of the Infotact internship.
 
+## Team Members
+- Darpana Khaspa
+
 ## Project Description
 This project uses Reinforcement Learning to optimize dynamic pricing in the travel and hospitality industry.
