@@ -1,3 +1,5 @@
+import subprocess
+import sys
 import streamlit as st
 import pandas as pd
 import os
@@ -153,3 +155,25 @@ elif section == "Evaluation Results":
     else:
 
         st.warning("Evaluation report not found.")
+
+st.subheader("Project Actions")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    if st.button("▶ Train Model", use_container_width=True):
+
+        with st.spinner("Training model..."):
+
+            subprocess.run([sys.executable, "src/train.py"])
+
+        st.success("Training completed successfully!")
+
+with col2:
+    if st.button("📊 Evaluate Model", use_container_width=True):
+
+        with st.spinner("Evaluating model..."):
+
+            subprocess.run([sys.executable, "src/evaluate.py"])
+
+        st.success("Evaluation completed successfully!")
