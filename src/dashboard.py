@@ -68,6 +68,26 @@ The agent learns pricing strategies based on:
 The objective is to maximize hotel revenue while reducing unsold inventory.
 """)
 
+    st.subheader("Project Actions")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        if st.button("▶ Train Model", width="stretch"):
+
+            with st.spinner("Training model..."):
+                subprocess.run([sys.executable, "src/train.py"])
+
+            st.success("Training completed successfully!")
+
+    with col2:
+        if st.button("📊 Evaluate Model", width="stretch"):
+
+            with st.spinner("Evaluating model..."):
+                subprocess.run([sys.executable, "src/evaluate.py"])
+
+            st.success("Evaluation completed successfully!")
+
 # -----------------------------
 # Dataset
 # -----------------------------
@@ -89,7 +109,40 @@ elif section == "Dataset":
 
         st.subheader("Dataset Preview")
 
-        st.dataframe(df.head(10), use_container_width=True)
+        st.dataframe(df.head(10), width="stretch")
+
+        # -----------------------------
+        # Reservation Status Distribution
+        # -----------------------------
+        st.subheader("Reservation Status Distribution")
+
+        status_counts = df["reservation_status"].value_counts()
+        st.bar_chart(status_counts)
+
+        # -----------------------------
+        # Hotel Type Distribution
+        # -----------------------------
+        st.subheader("Hotel Type Distribution")
+
+        hotel_counts = df["hotel"].value_counts()
+        st.bar_chart(hotel_counts)
+
+        # -----------------------------
+        # Monthly Booking Distribution
+        # -----------------------------
+        st.subheader("Monthly Booking Distribution")
+
+        month_counts = df["arrival_date_month"].value_counts()
+
+        month_order = [
+            "January", "February", "March", "April",
+            "May", "June", "July", "August",
+            "September", "October", "November", "December"
+        ]
+
+        month_counts = month_counts.reindex(month_order)
+
+        st.bar_chart(month_counts)
 
     else:
 
@@ -111,7 +164,6 @@ elif section == "Training Results":
             training_data = file.read()
 
         st.subheader("Training Summary")
-
         st.text(training_data)
 
     else:
@@ -127,7 +179,7 @@ elif section == "Training Results":
         st.image(
             reward_plot,
             caption="Reward per Episode",
-            use_container_width=True
+            width="stretch"
         )
 
     else:
@@ -149,31 +201,8 @@ elif section == "Evaluation Results":
             evaluation_data = file.read()
 
         st.subheader("Evaluation Report")
-
         st.text(evaluation_data)
 
     else:
 
         st.warning("Evaluation report not found.")
-
-st.subheader("Project Actions")
-
-col1, col2 = st.columns(2)
-
-with col1:
-    if st.button("▶ Train Model", use_container_width=True):
-
-        with st.spinner("Training model..."):
-
-            subprocess.run([sys.executable, "src/train.py"])
-
-        st.success("Training completed successfully!")
-
-with col2:
-    if st.button("📊 Evaluate Model", use_container_width=True):
-
-        with st.spinner("Evaluating model..."):
-
-            subprocess.run([sys.executable, "src/evaluate.py"])
-
-        st.success("Evaluation completed successfully!")
