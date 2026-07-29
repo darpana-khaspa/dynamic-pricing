@@ -186,6 +186,9 @@ elif section == "Training Results":
 
         st.warning("Training reward graph not found.")
 
+        st.subheader("Evaluation Report")
+        st.text(evaluation_data)
+
 # -----------------------------
 # Evaluation Results
 # -----------------------------
@@ -202,6 +205,35 @@ elif section == "Evaluation Results":
 
         st.subheader("Evaluation Report")
         st.text(evaluation_data)
+
+        # -----------------------------
+        # Performance Metrics
+        # -----------------------------
+        metrics = {}
+
+        for line in evaluation_data.splitlines():
+            if ":" in line:
+                key, value = line.split(":", 1)
+                metrics[key.strip()] = value.strip()
+
+        st.subheader("Performance Metrics")
+
+        col1, col2, col3 = st.columns(3)
+
+        col1.metric(
+            "Average Reward",
+            metrics.get("Average Reward", "N/A")
+        )
+
+        col2.metric(
+            "Best Reward",
+            metrics.get("Best Reward", "N/A")
+        )
+
+        col3.metric(
+            "Worst Reward",
+            metrics.get("Worst Reward", "N/A")
+        )
 
     else:
 
