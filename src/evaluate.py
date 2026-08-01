@@ -68,3 +68,8 @@ def evaluate_agent(episodes=3):
 
 if __name__ == "__main__":
     evaluate_agent()
+
+def train_agent():
+    """
+    Train the Q-Learning agent and save the learned policy.
+    """

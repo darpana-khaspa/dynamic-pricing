@@ -79,3 +79,8 @@ if __name__ == "__main__":
 
     print("\nProcessed Dataset Shape:")
     print(df.shape)
+
+def train_agent():
+    """
+    Train the Q-Learning agent and save the learned policy.
+    """

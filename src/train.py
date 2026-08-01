@@ -100,3 +100,8 @@ def train_agent(episodes=5):
 if __name__ == "__main__":
 
     train_agent()
+
+def train_agent():
+    """
+    Train the Q-Learning agent and save the learned policy.
+    """

@@ -1,0 +1,28 @@
+[33m20720d4[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Add comprehensive project README documentation
+[33m1c455db[m Add comprehensive project README documentation
+[33m2cef95e[m Merge branch 'Srimani-Deepika-krishna' into main
+[33md390dd0[m Merge branch 'darpana'
+[33m10c1391[m[33m ([m[1;31morigin/darpana[m[33m, [m[1;32mdarpana[m[33m)[m Fix dashboard structure and complete dynamic pricing implementation
+[33m42e237c[m[33m ([m[1;31morigin/Srimani-Deepika-krishna[m[33m)[m Implement hotel dynamic pricing prediction app
+[33m4945dc3[m Display evaluation metrics using dashboard cards
+[33m9d6e87c[m Add dataset analytics and visualizations to dashboard
+[33m9ade08e[m Add interactive training and evaluation controls to dashboard
+[33mb007bcf[m Add team member Srimani Deepika Krishna Chintalapudi
+[33m937c994[m Restructured project: moved all files into dynamic-pricing folder
+[33mc10bfc5[m Develop Streamlit dashboard for project visualization
+[33m642b0a8[m Generate evaluation performance report
+[33m4db9ab1[m Add training reward visualization
+[33ma9851c3[m Refactor Q-Learning agent and add learning controls
+[33m31b5d7a[m Enhance dataset preprocessing and save processed dataset
+[33m7b06200[m Save training results to output file
+[33md54292c[m Implement Q-Learning model evaluation
+[33m7f22baa[m Add epsilon decay and reward tracking
+[33m101ae7a[m Implement basic Q-Learning training loop
+[33m9e0a195[m Implement Q-Learning update rule
+[33m65dc542[m Implement Q-Learning agent skeleton
+[33mb68988e[m Implement basic dataset preprocessing
+[33ma6f236d[m Add dataset loading and summary utility functions
+[33m6465033[m Merge branch 'darpana' of https://github.com/darpana-khaspa/dynamic-pricing into darpana
+[33m73fa258[m Initialize project structure and implement hotel pricing environment
+[33m0f66fef[m[33m ([m[1;31morigin/khwaja[m[33m)[m Update README.md
+[33m4a5112a[m Add project description and team members to README
