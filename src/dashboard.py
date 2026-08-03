@@ -517,6 +517,16 @@ elif section == "💰 Price Recommendation":
 
         st.dataframe(summary, width="stretch")
 
+        # Export recommendation as CSV
+        csv = summary.to_csv(index=False).encode("utf-8")
+
+        st.download_button(
+            label="📥 Download Results (CSV)",
+            data=csv,
+            file_name="pricing_recommendation.csv",
+            mime="text/csv"
+        )
+
         st.subheader("📄 Booking Receipt")
 
         with st.container():
