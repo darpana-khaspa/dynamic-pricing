@@ -383,6 +383,9 @@ elif section == "💰 Price Recommendation":
 
     if st.button("🤖 Recommend Price", width="stretch"):
 
+        if "history" not in st.session_state:
+            st.session_state.history = []
+
         recommended_price = float(current_price)
 
         # Room type adjustment
@@ -516,6 +519,19 @@ elif section == "💰 Price Recommendation":
         })
 
         st.dataframe(summary, width="stretch")
+
+        # -----------------------------
+        # Save Recommendation History
+        # -----------------------------
+
+        st.session_state.history.append({
+            "Customer": customer_name if customer_name else "Guest",
+            "Hotel": hotel_type,
+            "Room": room_type,
+            "Current Price": current_price,
+            "AI Price": recommended_price,
+            "Action": action
+        })
 
         # Export recommendation as CSV
         csv = summary.to_csv(index=False).encode("utf-8")
@@ -653,6 +669,17 @@ elif section == "💰 Price Recommendation":
         st.metric(
             "Price Difference",
             f"£{price_change:.2f}"
+        )
+
+        st.divider()
+
+        st.subheader("🕒 Recommendation History")
+
+        history_df = pd.DataFrame(st.session_state.history)
+
+        st.dataframe(
+            history_df,
+            use_container_width=True
         )
 # -----------------------------
 # Dataset
