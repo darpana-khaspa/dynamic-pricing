@@ -681,6 +681,11 @@ elif section == "💰 Price Recommendation":
             history_df,
             use_container_width=True
         )
+
+        if st.button("🗑️ Clear Recommendation History"):
+            st.session_state.history = []
+            st.success("Recommendation history cleared successfully!")
+            st.rerun()
 # -----------------------------
 # Dataset
 # -----------------------------
