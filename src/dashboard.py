@@ -311,6 +311,14 @@ elif section == "💰 Price Recommendation":
     # -----------------------------
     # Customer Details
     # -----------------------------
+
+    col1, col2 = st.columns([3, 1])
+
+    with col2:
+        if st.button("🔄 Reset Form"):
+            st.session_state.clear()
+            st.rerun()
+
     customer_name = st.text_input("Customer Name")
 
     hotel_type = st.selectbox(
