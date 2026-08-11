@@ -311,6 +311,14 @@ elif section == "💰 Price Recommendation":
     # -----------------------------
     # Customer Details
     # -----------------------------
+
+    col1, col2 = st.columns([3, 1])
+
+    with col2:
+        if st.button("🔄 Reset Form"):
+            st.session_state.clear()
+            st.rerun()
+
     customer_name = st.text_input("Customer Name")
 
     hotel_type = st.selectbox(
@@ -383,6 +391,9 @@ elif section == "💰 Price Recommendation":
 
     if st.button("🤖 Recommend Price", width="stretch"):
 
+        if "history" not in st.session_state:
+            st.session_state.history = []
+
         recommended_price = float(current_price)
 
         # Room type adjustment
@@ -417,6 +428,18 @@ elif section == "💰 Price Recommendation":
         if stay_days >= 5:
             recommended_price -= 10
 
+        # -----------------------------
+        # Price Validation
+        # -----------------------------
+        minimum_price = 50
+        maximum_price = 1000
+
+        recommended_price = max(
+            minimum_price,
+            min(recommended_price, maximum_price)
+        )
+
+        action = "Maintain Price"
         # Recommendation
         action = "Maintain Price"
 
@@ -425,11 +448,43 @@ elif section == "💰 Price Recommendation":
         elif recommended_price < current_price:
             action = "Decrease Price 📉"
 
-        confidence = min(95, 70 + occupancy // 5)
+           confidence = min(95, 70 + occupancy // 5)
 
-        expected_revenue = recommended_price * stay_days
+        # -----------------------------
+        # Market Demand Score
+        # -----------------------------
+        demand_score = 50
+
+        if demand == "High":
+            demand_score += 25
+        elif demand == "Medium":
+            demand_score += 10
+        else:
+            demand_score -= 15
+
+        if occupancy > 80:
+            demand_score += 15
+        elif occupancy < 40:
+            demand_score -= 15
+
+        if remaining_rooms < 20:
+            demand_score += 10
+
+        if days_left <= 5:
+            demand_score += 10
+
+        demand_score = max(0, min(demand_score, 100))
+
+        expected_revenue = recommended_price * stay_days 
+
+
 
         st.success("✅ Recommendation Generated Successfully!")
+
+        st.metric(
+            "📊 Market Demand Score",
+            f"{demand_score}/100"
+        )
 
         col1, col2 = st.columns(2)
 
@@ -516,6 +571,30 @@ elif section == "💰 Price Recommendation":
         })
 
         st.dataframe(summary, width="stretch")
+
+        # -----------------------------
+        # Save Recommendation History
+        # -----------------------------
+
+        st.session_state.history.append({
+            "Time": datetime.now().strftime("%d-%m-%Y %I:%M %p"),
+            "Customer": customer_name if customer_name else "Guest",
+            "Hotel": hotel_type,
+            "Room": room_type,
+            "Current Price": current_price,
+            "AI Price": recommended_price,
+            "Action": action
+        })
+
+        # Export recommendation as CSV
+        csv = summary.to_csv(index=False).encode("utf-8")
+
+        st.download_button(
+            label="📥 Download Results (CSV)",
+            data=csv,
+            file_name="pricing_recommendation.csv",
+            mime="text/csv"
+        )
 
         st.subheader("📄 Booking Receipt")
 
@@ -644,6 +723,22 @@ elif section == "💰 Price Recommendation":
             "Price Difference",
             f"£{price_change:.2f}"
         )
+
+        st.divider()
+
+        st.subheader("🕒 Recommendation History")
+
+        history_df = pd.DataFrame(st.session_state.history)
+
+        st.dataframe(
+            history_df,
+            use_container_width=True
+        )
+
+        if st.button("🗑️ Clear Recommendation History"):
+            st.session_state.history = []
+            st.success("Recommendation history cleared successfully!")
+            st.rerun()
 # -----------------------------
 # Dataset
 # -----------------------------
