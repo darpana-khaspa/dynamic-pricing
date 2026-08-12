@@ -391,6 +391,27 @@ elif section == "💰 Price Recommendation":
 
     if st.button("🤖 Recommend Price", width="stretch"):
 
+        # -----------------------------
+        # Input Validation
+        # -----------------------------
+
+        if not customer_name.strip():
+            st.warning("⚠️ Please enter the customer name.")
+            st.stop()
+
+        if guests > 4 and room_type == "Standard":
+            st.warning(
+                "⚠️ Standard rooms support a maximum of 4 guests. "
+                "Please select Deluxe or Suite."
+            )
+            st.stop()
+
+        if stay_days > 7 and room_type == "Standard":
+            st.info(
+                "💡 For stays longer than 7 days, consider selecting "
+                "a Deluxe room or Suite."
+            )
+
         if "history" not in st.session_state:
             st.session_state.history = []
 
