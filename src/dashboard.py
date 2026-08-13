@@ -448,7 +448,7 @@ elif section == "💰 Price Recommendation":
         elif recommended_price < current_price:
             action = "Decrease Price 📉"
 
-           confidence = min(95, 70 + occupancy // 5)
+        confidence = min(95, 70 + occupancy // 5)
 
         # -----------------------------
         # Market Demand Score
@@ -730,10 +730,25 @@ elif section == "💰 Price Recommendation":
 
         history_df = pd.DataFrame(st.session_state.history)
 
-        st.dataframe(
-            history_df,
-            use_container_width=True
-        )
+        if not history_df.empty:
+
+            st.dataframe(
+                history_df,
+                use_container_width=True
+            )
+
+            history_csv = history_df.to_csv(index=False).encode("utf-8")
+
+            st.download_button(
+                "📥 Download Recommendation History",
+                data=history_csv,
+                file_name="recommendation_history.csv",
+                mime="text/csv"
+            )
+
+        else:
+
+            st.info("No recommendation history available yet.")
 
         if st.button("🗑️ Clear Recommendation History"):
             st.session_state.history = []
