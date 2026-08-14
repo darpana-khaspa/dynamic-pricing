@@ -120,6 +120,10 @@ class HotelPricingEnv(gym.Env):
 
         multiplier = price_changes[action]
         current_price = self.base_price * multiplier
+        # Ensure the recommended price remains within a safe range
+        min_price = self.base_price * 0.80
+        max_price = self.base_price * 1.20
+        current_price = np.clip(current_price, min_price, max_price)
 
         # -----------------------------
         # Demand Simulation
