@@ -3,6 +3,7 @@ Custom Gymnasium Environment
 Travel & Hospitality - Reinforcement Learning for Dynamic Pricing
 
 Author: Darpana Khaspa
+Ch Srimani Deepika Krishna
 """
 
 import gymnasium as gym
@@ -137,7 +138,7 @@ class HotelPricingEnv(gym.Env):
             0.95
         )
 
-        expected_customers = np.random.randint(5, 16)
+        expected_customers = max(1, int(np.random.randint(5, 16) * self.demand))
 
         bookings = 0
 
