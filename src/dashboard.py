@@ -554,14 +554,14 @@ elif section == "💰 Price Recommendation":
         # -----------------------------
 
         st.session_state.history.append({
-            "Customer": customer_name if customer_name else "Guest",
-            "Hotel": hotel_type,
-            "Room": room_type,
-            "Current Price": current_price,
-            "AI Price": recommended_price,
-            "Action": action
-        })
-
+    "Time": datetime.now().strftime("%d-%m-%Y %I:%M %p"),
+    "Customer": customer_name if customer_name else "Guest",
+    "Hotel": hotel_type,
+    "Room": room_type,
+    "Current Price": current_price,
+    "AI Price": recommended_price,
+    "Action": action
+})
         # Export recommendation as CSV
         csv = summary.to_csv(index=False).encode("utf-8")
 
