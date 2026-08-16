@@ -188,7 +188,9 @@ class HotelPricingEnv(gym.Env):
         info = {
             "price": current_price,
             "bookings": bookings,
-            "revenue": revenue
+            "revenue": revenue,
+            "remaining_rooms": self.remaining_rooms,
+            "days_remaining": self.days_remaining
         }
 
         return (
