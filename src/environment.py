@@ -236,6 +236,14 @@ if __name__ == "__main__":
 
         env.render()
 
+        action_names = {
+            0: "Decrease 20%",
+            1: "Decrease 10%",
+            2: "No Change",
+            3: "Increase 10%",
+            4: "Increase 20%"
+        }
+
         print(f"Action Taken : {action}")
         print(f"Price        : ₹{info['price']:.2f}")
         print(f"Bookings     : {info['bookings']}")
