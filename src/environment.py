@@ -208,6 +208,7 @@ class HotelPricingEnv(gym.Env):
 
         print("\n========== Hotel Pricing Environment ==========")
         print(f"Remaining Rooms : {self.remaining_rooms}")
+        print(f"Room Occupancy  : {((self.total_rooms - self.remaining_rooms) / self.total_rooms) * 100:.1f}%")
         print(f"Days Remaining  : {self.days_remaining}")
         print(f"Demand Level    : {self.demand:.2f}")
         print("===============================================\n")
