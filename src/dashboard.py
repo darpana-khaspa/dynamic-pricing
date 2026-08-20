@@ -575,6 +575,9 @@ elif section == "💰 Price Recommendation":
         # -----------------------------
         # Save Recommendation History
         # -----------------------------
+        price_change_percent = (
+            ((recommended_price - current_price) / current_price) * 100
+        )
 
         st.session_state.history.append({
             "Time": datetime.now().strftime("%d-%m-%Y %I:%M %p"),
@@ -583,6 +586,7 @@ elif section == "💰 Price Recommendation":
             "Room": room_type,
             "Current Price": current_price,
             "AI Price": recommended_price,
+            "Price Change": f"{price_change_percent:+.1f}%",
             "Action": action
         })
 
