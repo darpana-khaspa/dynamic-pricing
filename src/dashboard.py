@@ -13,6 +13,11 @@ st.set_page_config(
     layout="wide"
 )
 
+if "history" not in st.session_state:
+    st.session_state.history = []
+
+# Initialize session state
+
 st.markdown("""
 <style>
 
@@ -317,6 +322,7 @@ elif section == "💰 Price Recommendation":
     with col2:
         if st.button("🔄 Reset Form"):
             st.session_state.clear()
+            st.session_state.history = []
             st.rerun()
 
     customer_name = st.text_input("Customer Name")
@@ -754,7 +760,7 @@ elif section == "💰 Price Recommendation":
 
         st.subheader("🕒 Recommendation History")
 
-    history_df = pd.DataFrame(st.session_state.history)
+    history_df = pd.DataFrame(st.session_state.get("history", []))
 
     if not history_df.empty:
 
