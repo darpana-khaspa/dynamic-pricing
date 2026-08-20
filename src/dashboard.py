@@ -391,7 +391,6 @@ elif section == "💰 Price Recommendation":
 
     if st.button("🤖 Recommend Price", width="stretch"):
 
-<<<<<<< HEAD
         # -----------------------------
         # Input Validation
         # -----------------------------
@@ -413,8 +412,6 @@ elif section == "💰 Price Recommendation":
                 "a Deluxe room or Suite."
             )
 
-=======
->>>>>>> darpana
         if "history" not in st.session_state:
             st.session_state.history = []
 
@@ -613,17 +610,7 @@ elif section == "💰 Price Recommendation":
             "Price Change": f"{price_change_percent:+.1f}%",
             "Action": action
         })
-            "Customer": customer_name if customer_name else "Guest",
-            "Hotel": hotel_type,
-            "Room": room_type,
-            "Current Price": current_price,
-            "AI Price": recommended_price,
-<<<<<<< HEAD
-=======
-            "Price Change": f"{price_change_percent:+.1f}%",
->>>>>>> darpana
-            "Action": action
-        })
+            
 
         # Export recommendation as CSV
         csv = summary.to_csv(index=False).encode("utf-8")
@@ -767,39 +754,33 @@ elif section == "💰 Price Recommendation":
 
         st.subheader("🕒 Recommendation History")
 
-        history_df = pd.DataFrame(st.session_state.history)
+    history_df = pd.DataFrame(st.session_state.history)
 
-<<<<<<< HEAD
+    if not history_df.empty:
+
         st.dataframe(
             history_df,
             use_container_width=True
         )
-=======
-        if not history_df.empty:
 
-            st.dataframe(
-                history_df,
-                use_container_width=True
-            )
+        history_csv = history_df.to_csv(index=False).encode("utf-8")
 
-            history_csv = history_df.to_csv(index=False).encode("utf-8")
+        st.download_button(
+            "📥 Download Recommendation History",
+            data=history_csv,
+            file_name="recommendation_history.csv",
+            mime="text/csv"
+        )
 
-            st.download_button(
-                "📥 Download Recommendation History",
-                data=history_csv,
-                file_name="recommendation_history.csv",
-                mime="text/csv"
-            )
+    else:
 
-        else:
+        st.info("No recommendation history available yet.")
 
-            st.info("No recommendation history available yet.")
->>>>>>> darpana
+    if st.button("🗑️ Clear Recommendation History"):
+        st.session_state.history = []
+        st.success("Recommendation history cleared successfully!")
+        st.rerun()
 
-        if st.button("🗑️ Clear Recommendation History"):
-            st.session_state.history = []
-            st.success("Recommendation history cleared successfully!")
-            st.rerun()
 # -----------------------------
 # Dataset
 # -----------------------------
