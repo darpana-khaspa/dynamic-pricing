@@ -391,6 +391,7 @@ elif section == "💰 Price Recommendation":
 
     if st.button("🤖 Recommend Price", width="stretch"):
 
+<<<<<<< HEAD
         # -----------------------------
         # Input Validation
         # -----------------------------
@@ -412,6 +413,8 @@ elif section == "💰 Price Recommendation":
                 "a Deluxe room or Suite."
             )
 
+=======
+>>>>>>> darpana
         if "history" not in st.session_state:
             st.session_state.history = []
 
@@ -449,6 +452,18 @@ elif section == "💰 Price Recommendation":
         if stay_days >= 5:
             recommended_price -= 10
 
+        # -----------------------------
+        # Price Validation
+        # -----------------------------
+        minimum_price = 50
+        maximum_price = 1000
+
+        recommended_price = max(
+            minimum_price,
+            min(recommended_price, maximum_price)
+        )
+
+        action = "Maintain Price"
         # Recommendation
         action = "Maintain Price"
 
@@ -459,9 +474,41 @@ elif section == "💰 Price Recommendation":
 
         confidence = min(95, 70 + occupancy // 5)
 
-        expected_revenue = recommended_price * stay_days
+        # -----------------------------
+        # Market Demand Score
+        # -----------------------------
+        demand_score = 50
+
+        if demand == "High":
+            demand_score += 25
+        elif demand == "Medium":
+            demand_score += 10
+        else:
+            demand_score -= 15
+
+        if occupancy > 80:
+            demand_score += 15
+        elif occupancy < 40:
+            demand_score -= 15
+
+        if remaining_rooms < 20:
+            demand_score += 10
+
+        if days_left <= 5:
+            demand_score += 10
+
+        demand_score = max(0, min(demand_score, 100))
+
+        expected_revenue = recommended_price * stay_days 
+
+
 
         st.success("✅ Recommendation Generated Successfully!")
+
+        st.metric(
+            "📊 Market Demand Score",
+            f"{demand_score}/100"
+        )
 
         col1, col2 = st.columns(2)
 
@@ -552,13 +599,29 @@ elif section == "💰 Price Recommendation":
         # -----------------------------
         # Save Recommendation History
         # -----------------------------
+        price_change_percent = (
+            ((recommended_price - current_price) / current_price) * 100
+        )
 
         st.session_state.history.append({
+            "Time": datetime.now().strftime("%d-%m-%Y %I:%M %p"),
             "Customer": customer_name if customer_name else "Guest",
             "Hotel": hotel_type,
             "Room": room_type,
             "Current Price": current_price,
             "AI Price": recommended_price,
+            "Price Change": f"{price_change_percent:+.1f}%",
+            "Action": action
+        })
+            "Customer": customer_name if customer_name else "Guest",
+            "Hotel": hotel_type,
+            "Room": room_type,
+            "Current Price": current_price,
+            "AI Price": recommended_price,
+<<<<<<< HEAD
+=======
+            "Price Change": f"{price_change_percent:+.1f}%",
+>>>>>>> darpana
             "Action": action
         })
 
@@ -706,10 +769,32 @@ elif section == "💰 Price Recommendation":
 
         history_df = pd.DataFrame(st.session_state.history)
 
+<<<<<<< HEAD
         st.dataframe(
             history_df,
             use_container_width=True
         )
+=======
+        if not history_df.empty:
+
+            st.dataframe(
+                history_df,
+                use_container_width=True
+            )
+
+            history_csv = history_df.to_csv(index=False).encode("utf-8")
+
+            st.download_button(
+                "📥 Download Recommendation History",
+                data=history_csv,
+                file_name="recommendation_history.csv",
+                mime="text/csv"
+            )
+
+        else:
+
+            st.info("No recommendation history available yet.")
+>>>>>>> darpana
 
         if st.button("🗑️ Clear Recommendation History"):
             st.session_state.history = []
